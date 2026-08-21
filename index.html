@@ -1058,15 +1058,72 @@ async function mostrarPrendas(datos) {
 
     mostrarOpciones(
         prendas,
-
+    
         prenda => {
-
+    
             rutaActual.push(prenda);
-
-            mostrarFotos(
-                datos[prenda]
+    
+            const siguiente =
+                datos[prenda];
+    
+    
+            /*
+            ===================================================
+            SI ES UNA CARPETA DE GOOGLE DRIVE
+            ===================================================
+            */
+    
+            if (
+                siguiente &&
+                typeof siguiente === "object" &&
+                !Array.isArray(siguiente) &&
+                siguiente.driveFolderId
+            ) {
+    
+                mostrarPrendas(siguiente);
+    
+                return;
+    
+            }
+    
+    
+            /*
+            ===================================================
+            SI ES UN ARRAY DE FOTOGRAFÍAS
+            ===================================================
+            */
+    
+            if (Array.isArray(siguiente)) {
+    
+                mostrarFotos(siguiente);
+    
+                return;
+    
+            }
+    
+    
+            /*
+            ===================================================
+            SI ES OTRA CATEGORÍA
+            ===================================================
+            */
+    
+            if (
+                siguiente &&
+                typeof siguiente === "object"
+            ) {
+    
+                mostrarPrendas(siguiente);
+    
+                return;
+    
+            }
+    
+    
+            mostrarMensaje(
+                "No se ha encontrado contenido."
             );
-
+    
         }
     );
 
