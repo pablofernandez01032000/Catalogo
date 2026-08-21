@@ -25,7 +25,7 @@
             padding: 25px 20px;
         }
 
-        header h1 {
+        h1 {
             margin: 0;
             text-align: center;
             font-size: 28px;
@@ -37,27 +37,25 @@
             padding: 0 20px;
         }
 
-        .ruta {
+        #ruta {
             margin-bottom: 15px;
             color: #777;
             font-size: 14px;
         }
 
-        .volver {
+        #volver {
             display: none;
             margin-bottom: 20px;
             padding: 10px 16px;
-
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
-
-            font-size: 15px;
             cursor: pointer;
+            font-size: 15px;
         }
 
-        .volver:hover {
-            background: #eeeeee;
+        #volver:hover {
+            background: #eee;
         }
 
         .grid {
@@ -67,12 +65,12 @@
         }
 
         .boton {
+            min-height: 100px;
+            padding: 20px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-
-            min-height: 100px;
-            padding: 20px;
 
             background: white;
             border: 1px solid #ddd;
@@ -83,24 +81,18 @@
 
             cursor: pointer;
 
-            transition:
-                transform 0.15s,
-                box-shadow 0.15s;
+            transition: 0.15s;
         }
 
         .boton:hover {
             transform: translateY(-3px);
-
-            box-shadow:
-                0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .mensaje {
-            padding: 30px;
-
             background: white;
             border-radius: 12px;
-
+            padding: 30px;
             text-align: center;
             color: #777;
         }
@@ -114,44 +106,39 @@
         .foto {
             width: 100%;
             aspect-ratio: 1 / 1;
-
             object-fit: cover;
-
             border-radius: 10px;
-
             display: block;
+            background: #ddd;
+            cursor: pointer;
         }
 
         @media (max-width: 700px) {
-
-            header {
-                padding: 22px 15px;
-            }
-
-            header h1 {
-                font-size: 24px;
-            }
-
-            main {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
 
             .grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
 
-            .boton {
-                min-height: 85px;
-                font-size: 16px;
-                padding: 15px;
-            }
-
             .galeria {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
+
+            main {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .boton {
+                min-height: 85px;
+                font-size: 16px;
+            }
+
         }
 
         @media (max-width: 400px) {
@@ -171,30 +158,18 @@
 
 <header>
 
-    <h1 id="titulo">
-        Catálogo
-    </h1>
+    <h1 id="titulo">Catálogo</h1>
 
 </header>
 
 
 <main>
 
-    <div
-        id="ruta"
-        class="ruta">
-    </div>
+    <div id="ruta"></div>
 
-
-    <button
-        id="volver"
-        class="volver"
-        onclick="volver()">
-
+    <button id="volver" onclick="volver()">
         ← Volver
-
     </button>
-
 
     <div id="contenido"></div>
 
@@ -203,18 +178,16 @@
 
 <script>
 
+
 /*
 ===========================================================
-                    CATÁLOGO
+                    CONFIGURACIÓN
 ===========================================================
 
 IMPORTANTE:
 
-ESTA ES LA PARTE QUE TÚ PODRÁS MODIFICAR.
-
-Las marcas de cada categoría son INDEPENDIENTES.
-
-No es necesario que todas tengan las mismas marcas.
+ESTA ES LA ÚNICA PARTE QUE VAMOS A IR RELLENANDO
+CON LAS MARCAS Y FOTOGRAFÍAS.
 
 ===========================================================
 */
@@ -222,13 +195,11 @@ No es necesario que todas tengan las mismas marcas.
 
 const catalogo = {
 
-
     /*
     =======================================================
                         ROPA
     =======================================================
     */
-
 
     "Ropa": {
 
@@ -238,34 +209,47 @@ const catalogo = {
 
             Verano: {
 
-                "Nike": [
-                    "Camisetas": [
-        "fotos/ropa/hombre/verano/nike/camisetas/bb421554.jpeg"
-    ],
-                    "Cortavientos",
-                    "Calzonas"
-                ],
+                "Nike": {
 
-                "Adidas": [
-                    "Camisetas",
-                    "Calzonas"
-                ]
+                    "Camisetas": [
+                        "fotos/ropa/hombre/verano/nike/camisetas/bb421554.jpeg"
+                    ],
+
+                    "Cortavientos": [],
+
+                    "Calzonas": []
+
+                },
+
+                "Adidas": {
+
+                    "Camisetas": [],
+
+                    "Calzonas": []
+
+                }
 
             },
 
-
             Invierno: {
 
-                "Nike": [
-                    "Sudaderas",
-                    "Chaquetas",
-                    "Abrigos"
-                ],
+                "Nike": {
 
-                "The North Face": [
-                    "Chaquetas",
-                    "Abrigos"
-                ]
+                    "Sudaderas": [],
+
+                    "Chaquetas": [],
+
+                    "Abrigos": []
+
+                },
+
+                "The North Face": {
+
+                    "Chaquetas": [],
+
+                    "Abrigos": []
+
+                }
 
             }
 
@@ -276,24 +260,31 @@ const catalogo = {
 
             Verano: {
 
-                "Nike": [
-                    "Camisetas",
-                    "Calzonas"
-                ],
+                "Nike": {
 
-                "Adidas": [
-                    "Camisetas"
-                ]
+                    "Camisetas": [],
+
+                    "Calzonas": []
+
+                },
+
+                "Adidas": {
+
+                    "Camisetas": []
+
+                }
 
             },
 
-
             Invierno: {
 
-                "Nike": [
-                    "Sudaderas",
-                    "Chaquetas"
-                ]
+                "Nike": {
+
+                    "Sudaderas": [],
+
+                    "Chaquetas": []
+
+                }
 
             }
 
@@ -304,8 +295,7 @@ const catalogo = {
 
     /*
     =======================================================
-                      CATEGORÍAS
-                      CON MARCAS
+                  CATEGORÍAS CON MARCAS
     =======================================================
     */
 
@@ -536,7 +526,7 @@ const catalogo = {
 
 /*
 ===========================================================
-                    NAVEGACIÓN
+                    ESTADO DE LA WEB
 ===========================================================
 */
 
@@ -545,26 +535,41 @@ let rutaActual = [];
 
 
 /*
-Mostrar inicio
+===========================================================
+                    ELEMENTOS HTML
+===========================================================
 */
 
 
-function mostrarInicio() {
+const titulo =
+    document.getElementById("titulo");
+
+const ruta =
+    document.getElementById("ruta");
+
+const contenido =
+    document.getElementById("contenido");
+
+const botonVolver =
+    document.getElementById("volver");
+
+
+/*
+===========================================================
+                    PANTALLA INICIAL
+===========================================================
+*/
+
+
+function inicio() {
 
     rutaActual = [];
 
-    document.getElementById("titulo").textContent =
-        "Catálogo";
+    titulo.textContent = "Catálogo";
 
-    document.getElementById("ruta").textContent =
-        "";
+    ruta.textContent = "";
 
-    document.getElementById("volver").style.display =
-        "none";
-
-
-    const contenido =
-        document.getElementById("contenido");
+    botonVolver.style.display = "none";
 
     contenido.innerHTML = "";
 
@@ -594,23 +599,22 @@ function mostrarInicio() {
 
 
 /*
-Crear botón
+===========================================================
+                    CREAR BOTÓN
+===========================================================
 */
 
 
-function crearBoton(texto, accion) {
+function crearBoton(texto, funcion) {
 
     const boton =
         document.createElement("div");
 
-    boton.className =
-        "boton";
+    boton.className = "boton";
 
-    boton.textContent =
-        texto;
+    boton.textContent = texto;
 
-    boton.onclick =
-        accion;
+    boton.onclick = funcion;
 
     return boton;
 
@@ -618,53 +622,45 @@ function crearBoton(texto, accion) {
 
 
 /*
-Abrir categoría principal
+===========================================================
+                    ABRIR CATEGORÍA
+===========================================================
 */
 
 
-function abrirCategoria(categoria) {
+function abrirCategoria(nombre) {
 
-    rutaActual = [categoria];
+    rutaActual = [nombre];
 
-    mostrarNivel(
-        catalogo[categoria],
-        categoria
+    mostrarCategoria(
+        catalogo[nombre],
+        nombre
     );
 
 }
 
 
 /*
-Mostrar nivel
+===========================================================
+                    MOSTRAR CATEGORÍA
+===========================================================
 */
 
 
-function mostrarNivel(datos, titulo) {
+function mostrarCategoria(datos, nombre) {
 
-    document.getElementById("titulo").textContent =
-        titulo;
+    titulo.textContent = nombre;
 
+    actualizarRuta();
 
-    document.getElementById("ruta").textContent =
-        rutaActual.join(" → ");
-
-
-    document.getElementById("volver").style.display =
-        "inline-block";
-
-
-    const contenido =
-        document.getElementById("contenido");
+    botonVolver.style.display = "inline-block";
 
     contenido.innerHTML = "";
 
 
     /*
-    =======================================================
-                        ROPA
-    =======================================================
+    ROPA
     */
-
 
     if (datos.tipo === "ropa") {
 
@@ -675,87 +671,64 @@ function mostrarNivel(datos, titulo) {
                 rutaActual.push(genero);
 
                 mostrarTemporadas(
-                    datos[genero],
-                    genero
+                    datos[genero]
                 );
 
             }
         );
 
         return;
-
     }
 
 
     /*
-    =======================================================
-                    CATEGORÍA CON MARCAS
-    =======================================================
+    CATEGORÍAS CON MARCAS
     */
-
 
     if (datos.tipo === "marcas") {
 
-        if (datos.marcas.length === 0) {
-
-            mostrarMensaje(
-                "Todavía no hay marcas."
-            );
-
-            return;
-
-        }
-
-
-        mostrarOpciones(
-            datos.marcas,
-            marca => {
-
-                rutaActual.push(marca);
-
-                mostrarFotos([]);
-
-            }
+        mostrarMarcas(
+            datos.marcas
         );
 
         return;
-
     }
 
 
     /*
-    =======================================================
-                        FOTOGRAFÍAS
-    =======================================================
+    CATEGORÍAS CON FOTOS
     */
-
 
     if (datos.tipo === "fotos") {
 
-        mostrarFotos(datos.fotos);
+        mostrarFotos(
+            datos.fotos
+        );
 
+        return;
     }
 
 }
 
 
 /*
-Mostrar Hombre / Mujer
+===========================================================
+                    TEMPORADAS
+===========================================================
 */
 
 
-function mostrarTemporadas(datos, genero) {
+function mostrarTemporadas(datos) {
 
-    document.getElementById("titulo").textContent =
-        genero;
+    titulo.textContent =
+        rutaActual[rutaActual.length - 1];
 
-
-    document.getElementById("ruta").textContent =
-        rutaActual.join(" → ");
+    actualizarRuta();
 
 
     mostrarOpciones(
         ["Verano", "Invierno"],
+
         temporada => {
 
             rutaActual.push(temporada);
@@ -771,18 +744,18 @@ function mostrarTemporadas(datos, genero) {
 
 
 /*
-Mostrar marcas de Ropa
+===========================================================
+                    MARCAS DE ROPA
+===========================================================
 */
 
 
 function mostrarMarcasRopa(datos) {
 
-    document.getElementById("titulo").textContent =
+    titulo.textContent =
         rutaActual[rutaActual.length - 1];
 
-
-    document.getElementById("ruta").textContent =
-        rutaActual.join(" → ");
+    actualizarRuta();
 
 
     const marcas =
@@ -801,44 +774,35 @@ function mostrarMarcasRopa(datos) {
 
 
     mostrarOpciones(
-    marcas,
-    marca => {
+        marcas,
 
-        rutaActual.push(marca);
+        marca => {
 
-        mostrarPrendas(
-            datos[marca]
-        );
+            rutaActual.push(marca);
 
-    }
-);
+            mostrarPrendas(
+                datos[marca]
+            );
+
+        }
+    );
 
 }
 
 
 /*
-Mostrar categorías de prendas
+===========================================================
+                    MARCAS NORMALES
+===========================================================
 */
 
 
-function mostrarPrendas(categorias) {
+function mostrarMarcas(marcas) {
 
-    document.getElementById("titulo").textContent =
-        rutaActual[rutaActual.length - 1];
-
-    document.getElementById("ruta").textContent =
-        rutaActual.join(" → ");
-
-    const contenido =
-        document.getElementById("contenido");
-
-    contenido.innerHTML = "";
-
-
-    if (!categorias) {
+    if (!marcas || marcas.length === 0) {
 
         mostrarMensaje(
-            "Todavía no hay contenido."
+            "Todavía no hay marcas."
         );
 
         return;
@@ -846,94 +810,78 @@ function mostrarPrendas(categorias) {
     }
 
 
-    /*
-    =======================================================
-    SI LA MARCA TIENE PRENDAS CON FOTOGRAFÍAS
-    =======================================================
-    */
+    mostrarOpciones(
+        marcas,
 
-    if (
-        typeof categorias === "object" &&
-        !Array.isArray(categorias)
-    ) {
+        marca => {
 
-        const prendas =
-            Object.keys(categorias);
-
-
-        if (prendas.length === 0) {
+            rutaActual.push(marca);
 
             mostrarMensaje(
-                "Todavía no hay categorías de prendas."
+                "Todavía no hay fotografías."
             );
 
-            return;
-
         }
-
-
-        mostrarOpciones(
-            prendas,
-            prenda => {
-
-                rutaActual.push(prenda);
-
-                mostrarFotos(
-                    categorias[prenda]
-                );
-
-            }
-        );
-
-        return;
-
-    }
-
-
-    /*
-    =======================================================
-    ESTRUCTURA ANTIGUA
-    =======================================================
-    */
-
-    if (Array.isArray(categorias)) {
-
-        if (categorias.length === 0) {
-
-            mostrarMensaje(
-                "Todavía no hay categorías de prendas."
-            );
-
-            return;
-
-        }
-
-
-        mostrarOpciones(
-            categorias,
-            prenda => {
-
-                rutaActual.push(prenda);
-
-                mostrarFotos([]);
-
-            }
-        );
-
-    }
+    );
 
 }
 
 
 /*
-Mostrar opciones
+===========================================================
+                    PRENDAS
+===========================================================
 */
 
 
-function mostrarOpciones(opciones, accion) {
+function mostrarPrendas(datos) {
 
-    const contenido =
-        document.getElementById("contenido");
+    titulo.textContent =
+        rutaActual[rutaActual.length - 1];
+
+    actualizarRuta();
+
+
+    const prendas =
+        Object.keys(datos);
+
+
+    if (prendas.length === 0) {
+
+        mostrarMensaje(
+            "Todavía no hay prendas."
+        );
+
+        return;
+
+    }
+
+
+    mostrarOpciones(
+        prendas,
+
+        prenda => {
+
+            rutaActual.push(prenda);
+
+            mostrarFotos(
+                datos[prenda]
+            );
+
+        }
+    );
+
+}
+
+
+/*
+===========================================================
+                    OPCIONES
+===========================================================
+*/
+
+
+function mostrarOpciones(opciones, funcion) {
 
     contenido.innerHTML = "";
 
@@ -941,8 +889,7 @@ function mostrarOpciones(opciones, accion) {
     const grid =
         document.createElement("div");
 
-    grid.className =
-        "grid";
+    grid.className = "grid";
 
 
     opciones.forEach(opcion => {
@@ -950,7 +897,7 @@ function mostrarOpciones(opciones, accion) {
         const boton =
             crearBoton(
                 opcion,
-                () => accion(opcion)
+                () => funcion(opcion)
             );
 
         grid.appendChild(boton);
@@ -964,45 +911,23 @@ function mostrarOpciones(opciones, accion) {
 
 
 /*
-Mostrar mensaje
-*/
-
-
-function mostrarMensaje(texto) {
-
-    const contenido =
-        document.getElementById("contenido");
-
-    contenido.innerHTML = `
-
-        <div class="mensaje">
-
-            ${texto}
-
-        </div>
-
-    `;
-
-}
-
-
-/*
-Mostrar fotografías
+===========================================================
+                    FOTOGRAFÍAS
+===========================================================
 */
 
 
 function mostrarFotos(fotos) {
 
-    const contenido =
-        document.getElementById("contenido");
+    titulo.textContent =
+        rutaActual[rutaActual.length - 1];
+
+    actualizarRuta();
 
     contenido.innerHTML = "";
 
 
-    if (
-        !fotos ||
-        fotos.length === 0
-    ) {
+    if (!fotos || fotos.length === 0) {
 
         mostrarMensaje(
             "Todavía no hay fotografías."
@@ -1020,7 +945,7 @@ function mostrarFotos(fotos) {
         "galeria";
 
 
-    fotos.forEach(foto => {
+    fotos.forEach(rutaFoto => {
 
         const imagen =
             document.createElement("img");
@@ -1029,10 +954,9 @@ function mostrarFotos(fotos) {
             "foto";
 
         imagen.src =
-            foto;
+            rutaFoto;
 
-        imagen.alt =
-            "";
+        imagen.alt = "";
 
         galeria.appendChild(imagen);
 
@@ -1046,16 +970,54 @@ function mostrarFotos(fotos) {
 
 /*
 ===========================================================
-                        VOLVER
+                    MENSAJE
+===========================================================
+*/
+
+
+function mostrarMensaje(texto) {
+
+    contenido.innerHTML = "";
+
+    const mensaje =
+        document.createElement("div");
+
+    mensaje.className =
+        "mensaje";
+
+    mensaje.textContent =
+        texto;
+
+    contenido.appendChild(mensaje);
+
+}
+
+
+/*
+===========================================================
+                    RUTA
+===========================================================
+*/
+
+
+function actualizarRuta() {
+
+    ruta.textContent =
+        rutaActual.join(" → ");
+
+}
+
+
+/*
+===========================================================
+                    VOLVER
 ===========================================================
 */
 
 
 function volver() {
 
-    if (rutaActual.length <= 1) {
-
-        mostrarInicio();
+    if (rutaActual.length === 0) {
 
         return;
 
@@ -1065,50 +1027,49 @@ function volver() {
     rutaActual.pop();
 
 
-    reconstruirRuta();
-
-}
-
-
-/*
-Reconstruir la pantalla anterior
-*/
-
-
-function reconstruirRuta() {
-
     if (rutaActual.length === 0) {
 
-        mostrarInicio();
+        inicio();
 
         return;
 
     }
 
 
+    reconstruir();
+
+}
+
+
+/*
+===========================================================
+                    RECONSTRUIR PANTALLA
+===========================================================
+*/
+
+
+function reconstruir() {
+
+    const categoria =
+        rutaActual[0];
+
+
     /*
     -------------------------------------------------------
-    ROPA
+                        ROPA
     -------------------------------------------------------
     */
 
+    if (categoria === "Ropa") {
 
-    if (
-        rutaActual[0] === "Ropa"
-    ) {
+        const datos =
+            catalogo.Ropa;
 
-        const datosRopa =
-            catalogo["Ropa"];
-
-
-        /*
-        Ropa
-        */
 
         if (rutaActual.length === 1) {
 
-            mostrarNivel(
-                datosRopa,
+            mostrarCategoria(
+                datos,
                 "Ropa"
             );
 
@@ -1117,18 +1078,14 @@ function reconstruirRuta() {
         }
 
 
-        /*
-        Hombre / Mujer
-        */
+        const genero =
+            rutaActual[1];
+
 
         if (rutaActual.length === 2) {
 
-            const genero =
-                rutaActual[1];
-
             mostrarTemporadas(
-                datosRopa[genero],
-                genero
+                datos[genero]
             );
 
             return;
@@ -1136,20 +1093,16 @@ function reconstruirRuta() {
         }
 
 
-        /*
-        Verano / Invierno
-        */
+        const temporada =
+            rutaActual[2];
+
 
         if (rutaActual.length === 3) {
 
-            const genero =
-                rutaActual[1];
-
-            const temporada =
-                rutaActual[2];
-
             mostrarMarcasRopa(
-                datosRopa[genero][temporada]
+                datos
+                    [genero]
+                    [temporada]
             );
 
             return;
@@ -1157,23 +1110,14 @@ function reconstruirRuta() {
         }
 
 
-        /*
-        Marca
-        */
+        const marca =
+            rutaActual[3];
+
 
         if (rutaActual.length === 4) {
 
-            const genero =
-                rutaActual[1];
-
-            const temporada =
-                rutaActual[2];
-
-            const marca =
-                rutaActual[3];
-
             mostrarPrendas(
-                datosRopa
+                datos
                     [genero]
                     [temporada]
                     [marca]
@@ -1188,42 +1132,41 @@ function reconstruirRuta() {
 
     /*
     -------------------------------------------------------
-    OTRAS CATEGORÍAS
+                CATEGORÍAS NORMALES
     -------------------------------------------------------
     */
-
-
-    const categoria =
-        rutaActual[0];
 
     const datos =
         catalogo[categoria];
 
 
     if (
-        datos &&
-        datos.tipo === "marcas"
+        datos.tipo === "marcas" &&
+        rutaActual.length === 1
     ) {
 
-        if (rutaActual.length === 1) {
-
-            mostrarNivel(
-                datos,
-                categoria
-            );
-
-            return;
-
-        }
-
-        /*
-        Si estamos dentro de una marca,
-        actualmente mostramos las fotos.
-        */
-
-        mostrarNivel(
+        mostrarCategoria(
             datos,
-            rutaActual[rutaActual.length - 1]
+            categoria
+        );
+
+        return;
+
+    }
+
+
+    if (
+        datos.tipo === "marcas" &&
+        rutaActual.length === 2
+    ) {
+
+        titulo.textContent =
+            rutaActual[1];
+
+        actualizarRuta();
+
+        mostrarMensaje(
+            "Todavía no hay fotografías."
         );
 
         return;
@@ -1232,20 +1175,13 @@ function reconstruirRuta() {
 
 
     /*
-    -------------------------------------------------------
     GUANTES
-    -------------------------------------------------------
     */
 
+    if (datos.tipo === "fotos") {
 
-    if (
-        datos &&
-        datos.tipo === "fotos"
-    ) {
-
-        mostrarNivel(
-            datos,
-            categoria
+        mostrarFotos(
+            datos.fotos
         );
 
     }
@@ -1255,12 +1191,13 @@ function reconstruirRuta() {
 
 /*
 ===========================================================
-                        INICIO
+                        INICIAR
 ===========================================================
 */
 
 
-mostrarInicio();
+inicio();
+
 
 </script>
 
