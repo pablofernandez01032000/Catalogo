@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Catálogo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            padding: 30px 20px;
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .categorias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .categoria {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+            padding: 20px;
+
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .categoria:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 500px) {
+            header {
+                padding: 25px 15px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            main {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+
+            .categorias {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Catálogo</h1>
+    </header>
+
+    <main>
+        <div class="categorias">
+
+            <a class="categoria" href="#">
+                Animales
+            </a>
+
+            <a class="categoria" href="#">
+                Naturaleza
+            </a>
+
+            <a class="categoria" href="#">
+                Vehículos
+            </a>
+
+            <a class="categoria" href="#">
+                Edificios
+            </a>
+
+        </div>
+    </main>
+
+</body>
+</html>
