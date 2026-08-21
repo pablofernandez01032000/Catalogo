@@ -7,6 +7,7 @@
     <title>Catálogo</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -19,33 +20,57 @@
         }
 
         header {
-            padding: 30px 20px;
-            text-align: center;
             background: white;
             border-bottom: 1px solid #ddd;
+            padding: 25px 20px;
         }
 
         header h1 {
             margin: 0;
+            text-align: center;
             font-size: 28px;
         }
 
         main {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        .categorias {
+        .ruta {
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .volver {
+            display: none;
+            margin-bottom: 20px;
+            padding: 10px 16px;
+
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .volver:hover {
+            background: #eeeeee;
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
-        .categoria {
+        .boton {
             display: flex;
             align-items: center;
             justify-content: center;
+
             min-height: 100px;
             padding: 20px;
 
@@ -53,24 +78,54 @@
             border: 1px solid #ddd;
             border-radius: 12px;
 
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
 
             cursor: pointer;
-            text-decoration: none;
-            color: #222;
 
-            transition: transform 0.15s, box-shadow 0.15s;
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s;
         }
 
-        .categoria:hover {
+        .boton:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        @media (max-width: 500px) {
+        .mensaje {
+            padding: 30px;
+
+            background: white;
+            border-radius: 12px;
+
+            text-align: center;
+            color: #777;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .foto {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+
             header {
-                padding: 25px 15px;
+                padding: 22px 15px;
             }
 
             header h1 {
@@ -82,40 +137,1064 @@
                 padding: 0 15px;
             }
 
-            .categorias {
-                grid-template-columns: 1fr;
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .boton {
+                min-height: 85px;
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
         }
+
+        @media (max-width: 400px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <header>
-        <h1>Catálogo</h1>
-    </header>
 
-    <main>
-        <div class="categorias">
+<header>
 
-            <a class="categoria" href="#">
-                Animales
-            </a>
+    <h1 id="titulo">
+        Catálogo
+    </h1>
 
-            <a class="categoria" href="#">
-                Naturaleza
-            </a>
+</header>
 
-            <a class="categoria" href="#">
-                Vehículos
-            </a>
 
-            <a class="categoria" href="#">
-                Edificios
-            </a>
+<main>
+
+    <div
+        id="ruta"
+        class="ruta">
+    </div>
+
+
+    <button
+        id="volver"
+        class="volver"
+        onclick="volver()">
+
+        ← Volver
+
+    </button>
+
+
+    <div id="contenido"></div>
+
+</main>
+
+
+<script>
+
+/*
+===========================================================
+                    CATÁLOGO
+===========================================================
+
+IMPORTANTE:
+
+ESTA ES LA PARTE QUE TÚ PODRÁS MODIFICAR.
+
+Las marcas de cada categoría son INDEPENDIENTES.
+
+No es necesario que todas tengan las mismas marcas.
+
+===========================================================
+*/
+
+
+const catalogo = {
+
+
+    /*
+    =======================================================
+                        ROPA
+    =======================================================
+    */
+
+
+    "Ropa": {
+
+        tipo: "ropa",
+
+        Hombre: {
+
+            Verano: {
+
+                "Nike": [
+                    "Camisetas",
+                    "Cortavientos",
+                    "Calzonas"
+                ],
+
+                "Adidas": [
+                    "Camisetas",
+                    "Calzonas"
+                ]
+
+            },
+
+
+            Invierno: {
+
+                "Nike": [
+                    "Sudaderas",
+                    "Chaquetas",
+                    "Abrigos"
+                ],
+
+                "The North Face": [
+                    "Chaquetas",
+                    "Abrigos"
+                ]
+
+            }
+
+        },
+
+
+        Mujer: {
+
+            Verano: {
+
+                "Nike": [
+                    "Camisetas",
+                    "Calzonas"
+                ],
+
+                "Adidas": [
+                    "Camisetas"
+                ]
+
+            },
+
+
+            Invierno: {
+
+                "Nike": [
+                    "Sudaderas",
+                    "Chaquetas"
+                ]
+
+            }
+
+        }
+
+    },
+
+
+    /*
+    =======================================================
+                      CATEGORÍAS
+                      CON MARCAS
+    =======================================================
+    */
+
+
+    "Relojes": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Casio",
+            "Rolex",
+            "Seiko"
+        ]
+
+    },
+
+
+    "Bolsos": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Louis Vuitton",
+            "Gucci"
+        ]
+
+    },
+
+
+    "Carteras": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Gucci",
+            "Prada"
+        ]
+
+    },
+
+
+    "Accesorios": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas"
+        ]
+
+    },
+
+
+    "Zapatillas": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas",
+            "New Balance",
+            "Puma"
+        ]
+
+    },
+
+
+    "Zapatos": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas"
+        ]
+
+    },
+
+
+    "Botas": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Timberland"
+        ]
+
+    },
+
+
+    "Gafas": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Ray-Ban",
+            "Oakley"
+        ]
+
+    },
+
+
+    "Gorros": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas"
+        ]
+
+    },
+
+
+    "Cinturones": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Gucci",
+            "Prada"
+        ]
+
+    },
+
+
+    "Perfumes": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Dior",
+            "Chanel",
+            "Armani"
+        ]
+
+    },
+
+
+    "Trajes": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Armani",
+            "Hugo Boss"
+        ]
+
+    },
+
+
+    "Niños": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas"
+        ]
+
+    },
+
+
+    "Electrónica": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Apple",
+            "Samsung",
+            "Sony"
+        ]
+
+    },
+
+
+    "Maletas": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Samsonite",
+            "American Tourister"
+        ]
+
+    },
+
+
+    "Bufandas": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Burberry"
+        ]
+
+    },
+
+
+    /*
+    =======================================================
+                        GUANTES
+    =======================================================
+    */
+
+    "Guantes": {
+
+        tipo: "fotos",
+
+        fotos: []
+
+    },
+
+
+    "Bikinis": {
+
+        tipo: "marcas",
+
+        marcas: [
+            "Nike",
+            "Adidas"
+        ]
+
+    }
+
+};
+
+
+/*
+===========================================================
+                    NAVEGACIÓN
+===========================================================
+*/
+
+
+let rutaActual = [];
+
+
+/*
+Mostrar inicio
+*/
+
+
+function mostrarInicio() {
+
+    rutaActual = [];
+
+    document.getElementById("titulo").textContent =
+        "Catálogo";
+
+    document.getElementById("ruta").textContent =
+        "";
+
+    document.getElementById("volver").style.display =
+        "none";
+
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = "";
+
+
+    const grid =
+        document.createElement("div");
+
+    grid.className = "grid";
+
+
+    Object.keys(catalogo).forEach(categoria => {
+
+        const boton =
+            crearBoton(
+                categoria,
+                () => abrirCategoria(categoria)
+            );
+
+        grid.appendChild(boton);
+
+    });
+
+
+    contenido.appendChild(grid);
+
+}
+
+
+/*
+Crear botón
+*/
+
+
+function crearBoton(texto, accion) {
+
+    const boton =
+        document.createElement("div");
+
+    boton.className =
+        "boton";
+
+    boton.textContent =
+        texto;
+
+    boton.onclick =
+        accion;
+
+    return boton;
+
+}
+
+
+/*
+Abrir categoría principal
+*/
+
+
+function abrirCategoria(categoria) {
+
+    rutaActual = [categoria];
+
+    mostrarNivel(
+        catalogo[categoria],
+        categoria
+    );
+
+}
+
+
+/*
+Mostrar nivel
+*/
+
+
+function mostrarNivel(datos, titulo) {
+
+    document.getElementById("titulo").textContent =
+        titulo;
+
+
+    document.getElementById("ruta").textContent =
+        rutaActual.join(" → ");
+
+
+    document.getElementById("volver").style.display =
+        "inline-block";
+
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = "";
+
+
+    /*
+    =======================================================
+                        ROPA
+    =======================================================
+    */
+
+
+    if (datos.tipo === "ropa") {
+
+        mostrarOpciones(
+            ["Hombre", "Mujer"],
+            genero => {
+
+                rutaActual.push(genero);
+
+                mostrarTemporadas(
+                    datos[genero],
+                    genero
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    /*
+    =======================================================
+                    CATEGORÍA CON MARCAS
+    =======================================================
+    */
+
+
+    if (datos.tipo === "marcas") {
+
+        if (datos.marcas.length === 0) {
+
+            mostrarMensaje(
+                "Todavía no hay marcas."
+            );
+
+            return;
+
+        }
+
+
+        mostrarOpciones(
+            datos.marcas,
+            marca => {
+
+                rutaActual.push(marca);
+
+                mostrarFotos([]);
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    /*
+    =======================================================
+                        FOTOGRAFÍAS
+    =======================================================
+    */
+
+
+    if (datos.tipo === "fotos") {
+
+        mostrarFotos(datos.fotos);
+
+    }
+
+}
+
+
+/*
+Mostrar Hombre / Mujer
+*/
+
+
+function mostrarTemporadas(datos, genero) {
+
+    document.getElementById("titulo").textContent =
+        genero;
+
+
+    document.getElementById("ruta").textContent =
+        rutaActual.join(" → ");
+
+
+    mostrarOpciones(
+        ["Verano", "Invierno"],
+        temporada => {
+
+            rutaActual.push(temporada);
+
+            mostrarMarcasRopa(
+                datos[temporada]
+            );
+
+        }
+    );
+
+}
+
+
+/*
+Mostrar marcas de Ropa
+*/
+
+
+function mostrarMarcasRopa(datos) {
+
+    document.getElementById("titulo").textContent =
+        rutaActual[rutaActual.length - 1];
+
+
+    document.getElementById("ruta").textContent =
+        rutaActual.join(" → ");
+
+
+    const marcas =
+        Object.keys(datos);
+
+
+    if (marcas.length === 0) {
+
+        mostrarMensaje(
+            "Todavía no hay marcas."
+        );
+
+        return;
+
+    }
+
+
+    mostrarOpciones(
+        marcas,
+        marca => {
+
+            rutaActual.push(marca);
+
+            mostrarPrendas(
+                datos[marca]
+            );
+
+        }
+    );
+
+}
+
+
+/*
+Mostrar categorías de prendas
+*/
+
+
+function mostrarPrendas(categorias) {
+
+    document.getElementById("titulo").textContent =
+        rutaActual[rutaActual.length - 1];
+
+
+    document.getElementById("ruta").textContent =
+        rutaActual.join(" → ");
+
+
+    if (
+        !categorias ||
+        categorias.length === 0
+    ) {
+
+        mostrarMensaje(
+            "Todavía no hay categorías de prendas."
+        );
+
+        return;
+
+    }
+
+
+    mostrarOpciones(
+        categorias,
+        prenda => {
+
+            rutaActual.push(prenda);
+
+            mostrarFotos([]);
+
+        }
+    );
+
+}
+
+
+/*
+Mostrar opciones
+*/
+
+
+function mostrarOpciones(opciones, accion) {
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = "";
+
+
+    const grid =
+        document.createElement("div");
+
+    grid.className =
+        "grid";
+
+
+    opciones.forEach(opcion => {
+
+        const boton =
+            crearBoton(
+                opcion,
+                () => accion(opcion)
+            );
+
+        grid.appendChild(boton);
+
+    });
+
+
+    contenido.appendChild(grid);
+
+}
+
+
+/*
+Mostrar mensaje
+*/
+
+
+function mostrarMensaje(texto) {
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = `
+
+        <div class="mensaje">
+
+            ${texto}
 
         </div>
-    </main>
+
+    `;
+
+}
+
+
+/*
+Mostrar fotografías
+*/
+
+
+function mostrarFotos(fotos) {
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = "";
+
+
+    if (
+        !fotos ||
+        fotos.length === 0
+    ) {
+
+        mostrarMensaje(
+            "Todavía no hay fotografías."
+        );
+
+        return;
+
+    }
+
+
+    const galeria =
+        document.createElement("div");
+
+    galeria.className =
+        "galeria";
+
+
+    fotos.forEach(foto => {
+
+        const imagen =
+            document.createElement("img");
+
+        imagen.className =
+            "foto";
+
+        imagen.src =
+            foto;
+
+        imagen.alt =
+            "";
+
+        galeria.appendChild(imagen);
+
+    });
+
+
+    contenido.appendChild(galeria);
+
+}
+
+
+/*
+===========================================================
+                        VOLVER
+===========================================================
+*/
+
+
+function volver() {
+
+    if (rutaActual.length <= 1) {
+
+        mostrarInicio();
+
+        return;
+
+    }
+
+
+    rutaActual.pop();
+
+
+    reconstruirRuta();
+
+}
+
+
+/*
+Reconstruir la pantalla anterior
+*/
+
+
+function reconstruirRuta() {
+
+    if (rutaActual.length === 0) {
+
+        mostrarInicio();
+
+        return;
+
+    }
+
+
+    /*
+    -------------------------------------------------------
+    ROPA
+    -------------------------------------------------------
+    */
+
+
+    if (
+        rutaActual[0] === "Ropa"
+    ) {
+
+        const datosRopa =
+            catalogo["Ropa"];
+
+
+        /*
+        Ropa
+        */
+
+        if (rutaActual.length === 1) {
+
+            mostrarNivel(
+                datosRopa,
+                "Ropa"
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Hombre / Mujer
+        */
+
+        if (rutaActual.length === 2) {
+
+            const genero =
+                rutaActual[1];
+
+            mostrarTemporadas(
+                datosRopa[genero],
+                genero
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Verano / Invierno
+        */
+
+        if (rutaActual.length === 3) {
+
+            const genero =
+                rutaActual[1];
+
+            const temporada =
+                rutaActual[2];
+
+            mostrarMarcasRopa(
+                datosRopa[genero][temporada]
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Marca
+        */
+
+        if (rutaActual.length === 4) {
+
+            const genero =
+                rutaActual[1];
+
+            const temporada =
+                rutaActual[2];
+
+            const marca =
+                rutaActual[3];
+
+            mostrarPrendas(
+                datosRopa
+                    [genero]
+                    [temporada]
+                    [marca]
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+    -------------------------------------------------------
+    OTRAS CATEGORÍAS
+    -------------------------------------------------------
+    */
+
+
+    const categoria =
+        rutaActual[0];
+
+    const datos =
+        catalogo[categoria];
+
+
+    if (
+        datos &&
+        datos.tipo === "marcas"
+    ) {
+
+        if (rutaActual.length === 1) {
+
+            mostrarNivel(
+                datos,
+                categoria
+            );
+
+            return;
+
+        }
+
+        /*
+        Si estamos dentro de una marca,
+        actualmente mostramos las fotos.
+        */
+
+        mostrarNivel(
+            datos,
+            rutaActual[rutaActual.length - 1]
+        );
+
+        return;
+
+    }
+
+
+    /*
+    -------------------------------------------------------
+    GUANTES
+    -------------------------------------------------------
+    */
+
+
+    if (
+        datos &&
+        datos.tipo === "fotos"
+    ) {
+
+        mostrarNivel(
+            datos,
+            categoria
+        );
+
+    }
+
+}
+
+
+/*
+===========================================================
+                        INICIO
+===========================================================
+*/
+
+
+mostrarInicio();
+
+</script>
 
 </body>
 </html>
