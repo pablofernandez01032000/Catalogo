@@ -283,11 +283,9 @@ const catalogo = {
 
                 "Nike": {
 
-                    "Camisetas": [
-                        "fotos/ropa/hombre/verano/nike/camisetas/bb421554.jpeg",
-                        "fotos/ropa/hombre/verano/nike/camisetas/5070db5b.jpeg",
-                        "fotos/ropa/hombre/verano/nike/camisetas/15ebc0dc.jpeg"
-                    ],
+                    "Camisetas": {
+                        driveFolderId: "1-B-jcXcKBCpMd1BRv3FCntgXVWVKLr5q"
+                    },
 
                     "Cortavientos": [],
 
@@ -607,7 +605,9 @@ const catalogo = {
 
 let rutaActual = [];
 
-
+const API_DRIVE =
+    "https://script.google.com/macros/s/AKfycbwVCvtk8I1QiaKqcjGjB_laZvS45rCKFZ84RBVKn1SNL0YYEjbDi_02Bp74DK0JYHrm/exec";
+    
 /*
 ===========================================================
                     ELEMENTOS HTML
@@ -908,12 +908,86 @@ function mostrarMarcas(marcas) {
 */
 
 
-function mostrarPrendas(datos) {
+async function mostrarPrendas(datos) {
 
     titulo.textContent =
         rutaActual[rutaActual.length - 1];
 
     actualizarRuta();
+
+
+    /*
+    =======================================================
+                    SI ES UNA CARPETA DE DRIVE
+    =======================================================
+    */
+
+    if (
+        datos &&
+        typeof datos === "object" &&
+        !Array.isArray(datos) &&
+        datos.driveFolderId
+    ) {
+
+        contenido.innerHTML = `
+            <div class="mensaje">
+                Cargando fotografías...
+            </div>
+        `;
+
+
+        try {
+
+            const respuesta =
+                await fetch(
+                    API_DRIVE +
+                    "?folderId=" +
+                    encodeURIComponent(
+                        datos.driveFolderId
+                    )
+                );
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    "Error al consultar Google Drive"
+                );
+
+            }
+
+
+            const fotos =
+                await respuesta.json();
+
+
+            mostrarFotos(
+                fotos.map(
+                    foto => foto.url
+                )
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            mostrarMensaje(
+                "No se han podido cargar las fotografías."
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+    =======================================================
+                    ESTRUCTURA NORMAL
+    =======================================================
+    */
 
 
     const prendas =
