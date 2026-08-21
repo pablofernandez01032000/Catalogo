@@ -149,6 +149,67 @@
 
         }
 
+        /* =======================================================
+           VISOR DE IMÁGENES
+           ======================================================= */
+        
+        #visor {
+            display: none;
+        
+            position: fixed;
+            z-index: 1000;
+        
+            top: 0;
+            left: 0;
+        
+            width: 100%;
+            height: 100%;
+        
+            background: rgba(0, 0, 0, 0.9);
+        
+            align-items: center;
+            justify-content: center;
+        
+            padding: 20px;
+        
+            cursor: zoom-out;
+        }
+        
+        #imagenGrande {
+            max-width: 95%;
+            max-height: 95%;
+        
+            object-fit: contain;
+        
+            border-radius: 8px;
+        
+            cursor: default;
+        }
+        
+        #cerrar {
+            position: absolute;
+        
+            top: 20px;
+            right: 25px;
+        
+            width: 45px;
+            height: 45px;
+        
+            border: none;
+            border-radius: 50%;
+        
+            background: white;
+        
+            font-size: 24px;
+        
+            cursor: pointer;
+        
+            z-index: 1001;
+        }
+        
+        #cerrar:hover {
+            background: #eeeeee;
+        }
     </style>
 </head>
 
@@ -175,6 +236,17 @@
 
 </main>
 
+<!-- Ventana para ampliar imágenes -->
+
+<div id="visor" onclick="cerrarImagen()">
+
+    <button id="cerrar" onclick="cerrarImagen(event)">
+        ✕
+    </button>
+
+    <img id="imagenGrande" src="" alt="">
+
+</div>
 
 <script>
 
@@ -949,15 +1021,21 @@ function mostrarFotos(fotos) {
 
         const imagen =
             document.createElement("img");
-
+    
         imagen.className =
             "foto";
-
+    
         imagen.src =
             rutaFoto;
-
+    
         imagen.alt = "";
-
+    
+        imagen.onclick = function() {
+    
+            abrirImagen(rutaFoto);
+    
+        };
+    
         galeria.appendChild(imagen);
 
     });
@@ -1188,6 +1266,52 @@ function reconstruir() {
 
 }
 
+    /*
+    ===========================================================
+                        VISOR DE IMÁGENES
+    ===========================================================
+    */
+    
+    function abrirImagen(rutaFoto) {
+    
+        const visor =
+            document.getElementById("visor");
+    
+        const imagenGrande =
+            document.getElementById("imagenGrande");
+    
+        imagenGrande.src =
+            rutaFoto;
+    
+        visor.style.display =
+            "flex";
+    
+    }
+    
+    
+    function cerrarImagen(event) {
+    
+        /*
+        Evita que al pulsar la imagen
+        se cierre también el visor.
+        */
+    
+        if (event) {
+    
+            event.stopPropagation();
+    
+        }
+    
+        const visor =
+            document.getElementById("visor");
+    
+        visor.style.display =
+            "none";
+    
+        document.getElementById("imagenGrande").src =
+            "";
+    
+    }
 
 /*
 ===========================================================
