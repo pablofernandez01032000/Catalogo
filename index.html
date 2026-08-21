@@ -239,7 +239,9 @@ const catalogo = {
             Verano: {
 
                 "Nike": [
-                    "Camisetas",
+                    "Camisetas": [
+        "fotos/ropa/hombre/verano/nike/camisetas/bb421554.jpeg"
+    ],
                     "Cortavientos",
                     "Calzonas"
                 ],
@@ -799,17 +801,17 @@ function mostrarMarcasRopa(datos) {
 
 
     mostrarOpciones(
-        marcas,
-        marca => {
+    marcas,
+    marca => {
 
-            rutaActual.push(marca);
+        rutaActual.push(marca);
 
-            mostrarPrendas(
-                datos[marca]
-            );
+        mostrarPrendas(
+            datos[marca]
+        );
 
-        }
-    );
+    }
+);
 
 }
 
@@ -824,18 +826,19 @@ function mostrarPrendas(categorias) {
     document.getElementById("titulo").textContent =
         rutaActual[rutaActual.length - 1];
 
-
     document.getElementById("ruta").textContent =
         rutaActual.join(" → ");
 
+    const contenido =
+        document.getElementById("contenido");
 
-    if (
-        !categorias ||
-        categorias.length === 0
-    ) {
+    contenido.innerHTML = "";
+
+
+    if (!categorias) {
 
         mostrarMensaje(
-            "Todavía no hay categorías de prendas."
+            "Todavía no hay contenido."
         );
 
         return;
@@ -843,16 +846,81 @@ function mostrarPrendas(categorias) {
     }
 
 
-    mostrarOpciones(
-        categorias,
-        prenda => {
+    /*
+    =======================================================
+    SI LA MARCA TIENE PRENDAS CON FOTOGRAFÍAS
+    =======================================================
+    */
 
-            rutaActual.push(prenda);
+    if (
+        typeof categorias === "object" &&
+        !Array.isArray(categorias)
+    ) {
 
-            mostrarFotos([]);
+        const prendas =
+            Object.keys(categorias);
+
+
+        if (prendas.length === 0) {
+
+            mostrarMensaje(
+                "Todavía no hay categorías de prendas."
+            );
+
+            return;
 
         }
-    );
+
+
+        mostrarOpciones(
+            prendas,
+            prenda => {
+
+                rutaActual.push(prenda);
+
+                mostrarFotos(
+                    categorias[prenda]
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    /*
+    =======================================================
+    ESTRUCTURA ANTIGUA
+    =======================================================
+    */
+
+    if (Array.isArray(categorias)) {
+
+        if (categorias.length === 0) {
+
+            mostrarMensaje(
+                "Todavía no hay categorías de prendas."
+            );
+
+            return;
+
+        }
+
+
+        mostrarOpciones(
+            categorias,
+            prenda => {
+
+                rutaActual.push(prenda);
+
+                mostrarFotos([]);
+
+            }
+        );
+
+    }
 
 }
 
