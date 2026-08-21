@@ -918,7 +918,7 @@ async function mostrarPrendas(datos) {
 
     /*
     =======================================================
-                    SI ES UNA CARPETA DE DRIVE
+                    CARPETA DE GOOGLE DRIVE
     =======================================================
     */
 
@@ -938,39 +938,91 @@ async function mostrarPrendas(datos) {
 
         try {
 
-            const respuesta =
-                await fetch(
-                    API_DRIVE +
-                    "?folderId=" +
-                    encodeURIComponent(
-                        datos.driveFolderId
-                    )
-                );
+            const respuesta = await fetch(
+                API_DRIVE +
+                "?folderId=" +
+                encodeURIComponent(
+                    datos.driveFolderId
+                )
+            );
 
 
             if (!respuesta.ok) {
 
                 throw new Error(
-                    "Error al consultar Google Drive"
+                    "Error HTTP: " +
+                    respuesta.status
                 );
 
             }
 
 
-            const fotos =
+            const datosDrive =
                 await respuesta.json();
 
 
-            mostrarFotos(
-                fotos.map(
-                    foto => foto.url
-                )
-            );
+            /*
+            Comprobamos que Google Drive
+            realmente nos ha devuelto un array.
+            */
+
+            if (!Array.isArray(datosDrive)) {
+
+                console.error(
+                    "Respuesta de Google Drive:",
+                    datosDrive
+                );
+
+                throw new Error(
+                    "La respuesta de Google Drive no es un array."
+                );
+
+            }
+
+
+            /*
+            Extraemos únicamente las URLs.
+            */
+
+            const fotos =
+                datosDrive
+                    .filter(
+                        foto =>
+                            foto &&
+                            foto.url
+                    )
+                    .map(
+                        foto =>
+                            foto.url
+                    );
+
+
+            if (fotos.length === 0) {
+
+                mostrarMensaje(
+                    "No hay fotografías en esta carpeta."
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Ahora sí enviamos un ARRAY
+            a mostrarFotos().
+            */
+
+            mostrarFotos(fotos);
 
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error cargando Google Drive:",
+                error
+            );
+
 
             mostrarMensaje(
                 "No se han podido cargar las fotografías."
@@ -978,8 +1030,8 @@ async function mostrarPrendas(datos) {
 
         }
 
-        return;
 
+        return;
     }
 
 
@@ -988,7 +1040,6 @@ async function mostrarPrendas(datos) {
                     ESTRUCTURA NORMAL
     =======================================================
     */
-
 
     const prendas =
         Object.keys(datos);
