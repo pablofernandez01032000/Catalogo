@@ -210,6 +210,48 @@
         #cerrar:hover {
             background: #eeeeee;
         }
+
+        #anterior,
+        #siguiente {
+            position: absolute;
+        
+            top: 50%;
+            transform: translateY(-50%);
+        
+            width: 55px;
+            height: 80px;
+        
+            border: none;
+            border-radius: 10px;
+        
+            background: rgba(255, 255, 255, 0.2);
+        
+            color: white;
+        
+            font-size: 50px;
+            line-height: 50px;
+        
+            cursor: pointer;
+        
+            z-index: 1001;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #anterior {
+            left: 20px;
+        }
+        
+        #siguiente {
+            right: 20px;
+        }
+        
+        #anterior:hover,
+        #siguiente:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 
@@ -240,13 +282,34 @@
 
 <div id="visor" onclick="cerrarImagen()">
 
-    <button id="cerrar" onclick="cerrarImagen(event)">
-        ✕
-    </button>
-
-    <img id="imagenGrande" src="" alt="">
-
-</div>
+        <button
+            id="cerrar"
+            onclick="cerrarImagen(event)"
+        >
+            ✕
+        </button>
+    
+        <button
+            id="anterior"
+            onclick="imagenAnterior(event)"
+        >
+            ‹
+        </button>
+    
+        <img
+            id="imagenGrande"
+            src=""
+            alt=""
+        >
+    
+        <button
+            id="siguiente"
+            onclick="imagenSiguiente(event)"
+        >
+            ›
+        </button>
+    
+    </div>
 
 <script>
 
@@ -1456,22 +1519,128 @@ function reconstruir() {
     ===========================================================
     */
     
-    function abrirImagen(rutaFoto) {
-    
-        const visor =
-            document.getElementById("visor");
-    
-        const imagenGrande =
-            document.getElementById("imagenGrande");
-    
-        imagenGrande.src =
-            rutaFoto;
-    
-        visor.style.display =
-            "flex";
-    
+   let fotosVisor = [];
+let indiceFotoActual = 0;
+
+
+function abrirImagen(rutaFoto) {
+
+    fotosVisor = Array.from(
+        document.querySelectorAll(".foto")
+    ).map(
+        imagen => imagen.src
+    );
+
+    indiceFotoActual =
+        fotosVisor.indexOf(rutaFoto);
+
+    if (indiceFotoActual === -1) {
+        indiceFotoActual = 0;
     }
+
+    actualizarImagenVisor();
+
+    const visor =
+        document.getElementById("visor");
+
+    visor.style.display = "flex";
+}
+
+
+function actualizarImagenVisor() {
+
+    const imagenGrande =
+        document.getElementById("imagenGrande");
+
+    if (
+        !fotosVisor.length ||
+        indiceFotoActual < 0 ||
+        indiceFotoActual >= fotosVisor.length
+    ) {
+        return;
+    }
+
+    imagenGrande.src =
+        fotosVisor[indiceFotoActual];
+}
+
+
+function imagenAnterior(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    if (!fotosVisor.length) {
+        return;
+    }
+
+    indiceFotoActual--;
+
+    if (indiceFotoActual < 0) {
+        indiceFotoActual =
+            fotosVisor.length - 1;
+    }
+
+    actualizarImagenVisor();
+}
+
+
+function imagenSiguiente(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    if (!fotosVisor.length) {
+        return;
+    }
+
+    indiceFotoActual++;
+
+    if (
+        indiceFotoActual >=
+        fotosVisor.length
+    ) {
+        indiceFotoActual = 0;
+    }
+
+    actualizarImagenVisor();
+}
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
     
+            const visor =
+                document.getElementById("visor");
+    
+            if (
+                visor.style.display !== "flex"
+            ) {
+                return;
+            }
+    
+            if (event.key === "ArrowLeft") {
+    
+                imagenAnterior();
+    
+            }
+    
+            if (event.key === "ArrowRight") {
+    
+                imagenSiguiente();
+    
+            }
+    
+            if (event.key === "Escape") {
+    
+                cerrarImagen();
+    
+            }
+    
+        }
+    );
     
     function cerrarImagen(event) {
     
